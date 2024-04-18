@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html lang="az">
+<head>
+    <title>Cavidan</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        
+        .container{
+            margin: 50px auto;
+            width:100%;
+            display: flex;
+            max-width: 400px;
+            flex-direction: column;
+            gap: 40px;
+            padding:40px;
+            border: 4px dashed blue;
+            align-items: flex-start;
+            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px 2px rgb(103, 81, 233);
+        }
+        .button{
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 30px;
+        }
+        #hesabla{
+            background-color: blue;
+            color: #fff;
+            padding:10px;
+            border: none;
+            box-shadow: 0px 0px 10px 2px rgb(103, 81, 233);
+            border-radius: 10px;
+            font-size: 20px;
+        }
+        #reset{
+            background-color: rgb(235, 80, 80);
+            color: #fff;
+            padding:10px;
+            font-size: 20px;
+            border: none;
+            box-shadow:0px 0px 10px 2px rgb(230, 106, 106);
+            border-radius: 10px;
+        }
+        label{
+            font-size: 20px;
+        }
+        input{
+            outline: none;
+            padding: 20px 10px;
+            border-radius: 20px;
+            width: 100%;
+            box-shadow: 0px 0px 10px 2px rgb(103, 81, 233);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="">Ədədləri daxil edin:</label>
+        <input type="text" placeholder="Ədədləri daxil edin!" id="numbersInput">
+        <div class="button">
+            <button onclick="calculateMaxDigitSum()" id="hesabla">Ededi tap</button>
+            <button onclick="reset()" id="reset">Sıfırla</button>
+        </div>
+        <p id="netice">Reqemleri cemi en boyuk olan eded:</p>
+        <p id="ededler">ededler:</p>
+    </div>
+    <script>
+        function sumNum(n) {
+            let cem = 0;
+            while (n > 0) {
+                cem += n % 10;
+                n = Math.floor(n / 10);
+            }
+            return cem;
+        }
+
+        function calculateMaxDigitSum() {
+    const numInput = document.getElementById("numbersInput").value;
+    const netice = document.getElementById("netice");
+    const ededler= document.getElementById("ededler");
+    const numArray = numInput.split(" ");
+    let maxSum = -1;
+    let maxNum = -1;
+    let isvalid = true;
+
+    if (numInput === "") {
+        alert("Input'a ədədlər daxil edin!");
+        document.getElementById("numbersInput").focus();
+        return;
+    }
+
+    numArray.forEach((eded) => {
+        if (!isvalid) {
+            return;
+        }
+        let num = eded*1;
+        if (isNaN(num)) {
+            alert("Yalnız ədəd daxil edin!");
+            isvalid = false;
+            return; 
+        }
+
+        let sum = sumNum(num);
+
+        if (sum > maxSum) {
+            maxSum = sum;
+            maxNum = num;
+        }
+    });
+
+    if (isvalid) {
+        if (maxNum !== -1) {
+            netice.innerHTML = "Reqemleri cemi en boyuk olan eded: " + maxNum;
+            ededler.innerHTML= "ededler:" + numArray;
+        }
+    }
+}
+
+        function reset(){
+            document.getElementById("numbersInput").value = "";
+            document.getElementById("netice").innerText = "Reqemleri cemi en boyuk olan eded:";
+            document.getElementById("ededler").innerText="ededler:"
+        }
+    </script>
+</body>
+</html>
