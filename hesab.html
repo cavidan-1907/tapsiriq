@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="az"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cavidan</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: rgb(155,155,255);
+            box-shadow: 0 0 10px 2px blue;
+        }
+        label {
+            font-weight: bold;
+            color: #333; 
+        }
+        input[type="number"] {
+            padding: 8px;
+            width: calc(100% - 16px); 
+            box-sizing: border-box;
+            border: 2px solid #ccc; 
+            border-radius: 5px;
+        }
+        .button {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        .radio {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .radio input[type="radio"] {
+            margin-right: 5px;
+        }
+        .button1{
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 10px;
+        }
+      #hesabla{
+            background-color: rgb(15, 12, 226);
+            border: none;
+            padding: 20px 10px;
+            color: #fff;
+            font-size: 20px;
+            border-radius: 10px;
+        }
+        #reset{
+            background-color: red;
+            border: none;
+            padding: 20px 10px;
+            color: #fff;
+            font-size: 20px;
+            border-radius: 10px;
+        }
+        p {
+            font-weight: bold;
+            border-top: 2px solid #ccc; 
+            padding-top: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <label for="eded1">Ədəd1:</label>
+        <input type="number" id="eded1" class="input-field">
+        <label for="eded2">Ədəd2:</label>
+        <input type="number" id="eded2" class="input-field">
+        <div class="button">
+            <div class="radio">
+                <label for="">Əməllər:</label>
+                <div>
+                    <input type="radio" name="operator" id="vurma" class="operation" value="vurma">
+                    <label for="vurma">vurma</label>
+                </div>
+                <div>
+                    <input type="radio" name="operator" id="bölme" class="operation" value="bölme">
+                    <label for="bölme">bölme</label>
+                </div>
+                <div>
+                    <input type="radio" name="operator" id="çıxma" class="operation" value="çıxma">
+                    <label for="çıxma">çıxma</label>
+                </div>
+                <div>
+                    <input type="radio" name="operator" id="toplama" class="operation" value="toplama">
+                    <label for="toplama">toplama</label>
+                </div>
+            </div>
+            <div class="button1">
+            <input type="button" value="hesabla" id="hesabla" onclick="hesapla()">
+       <input type="button" id="reset" onclick="temizle()" value="temizle"></div>
+        </div>
+        <p id="netice">Netice</p>
+    </div>
+
+    <script>
+        const hesapla = () => {
+            const eded1 = parseFloat(document.getElementById('eded1').value);
+            const eded2 = parseFloat(document.getElementById('eded2').value);
+            let operator;
+
+            const operations = document.querySelectorAll('.operation');
+            operations.forEach(op => {
+                if (op.checked) {
+                    operator = op.value;
+                }
+            });
+
+            let netice;
+            if (operator === "vurma") {
+                netice = eded1 * eded2;
+            } else if (operator === "bölme") {
+                netice = eded1 / eded2;
+            } else if (operator === "çıxma") {
+                netice = eded1 - eded2;
+            } else if (operator === "toplama") {
+                netice = eded1 + eded2;
+            } else {
+                netice = "Əməl seçilməyib!";
+            }
+
+            document.getElementById('netice').textContent = "Netice: " + netice;
+        }
+        const temizle=()=>{
+            let operator;
+
+const operations = document.querySelectorAll('.operation');
+document.getElementById('eded1').value="";
+document.getElementById('eded2').value="";
+document.getElementById('netice').textContent = "Netice: "
+operations.forEach(op => {
+    if (op.checked) {
+        operator = op.value;
+        op.checked = false; 
+    }
+});
+        }
+    </script>
+</body>
+</html>

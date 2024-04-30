@@ -1,0 +1,13 @@
+1.JavaScript funksiyalardan istifade lokal ve qlobal deyisenler
+2.JavaScript math obyekti
+3.JavaScript string obyekti
+4.JavaScript array obyekti
+5.JavaScript date obyekti
+6.JavaScript sert operatorlari
+7.JavaScript dovr operatorlari
+
+
+slice ve concat yeni massiv qaytarir;
+
+
+n natural ededi verilmisdir n sayda tesadufi natural ededden ibaret massiv formalasdirmaq ucun javascript dilinde proqram yazin tesadufi ededler verilmis araligdan  olmalidirn natural ededi verilmisdir n sayda tesadufi natural ededden ibaret massiv formalasdirmaq ucun javascript dilinde proqram yazin tesadufi ededler verilmis araligdan  olmalidir 

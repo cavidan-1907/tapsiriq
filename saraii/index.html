@@ -68,6 +68,7 @@
             <button onclick="reset()" id="reset">Sıfırla</button>
         </div>
         <p id="netice">Reqemleri cemi en boyuk olan eded:</p>
+        <p id="ededler">ededler:</p>
     </div>
     <script>
         function sumNum(n) {
@@ -83,12 +84,12 @@
             const numInput = document.getElementById("numbersInput").value;
             const netice = document.getElementById("netice");
             const numArray = numInput.split(" ");
-
+            const ededler= document.getElementById("ededler");
             let maxSum = -1;
             let maxNum = -1;
             let isvalid = true;
 
-            if (numInput === "") {
+            if (numInput.trim() === "") {
                 alert("Input'a ədədlər daxil edin!");
                 document.getElementById("numbersInput").focus();
                 return;
@@ -117,15 +118,15 @@
             if (isvalid) {
                 if (maxNum !== -1) {
                     netice.innerHTML = "Reqemleri cemi en boyuk olan eded: " + maxNum;
-                } else {
-                    netice.innerHTML = "Daxil edilən ədədlərdən heç birində rəqəm yoxdur!";
-                }
+                    ededler.innerHTML= "ededler:" + numArray;
+                } 
             }
         }
 
         function reset(){
             document.getElementById("numbersInput").value = "";
             document.getElementById("netice").innerText = "Reqemleri cemi en boyuk olan eded:";
+            document.getElementById("ededler").innerText="ededler:"
         }
     </script>
 </body>

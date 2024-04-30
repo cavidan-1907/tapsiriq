@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cavidan RandomArr</title>
+    <style>
+     * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #fff; 
+    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1); 
+}
+
+.container input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    font-size: 16px; 
+}
+
+.container button {
+    padding: 10px 20px;
+    background-color: #4CAF50; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s; 
+}
+
+.container button:hover {
+    background-color: #45a049; 
+}
+
+.container p {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="number" placeholder="Ədəd sayı">
+        <input type="text" id="ar1" placeholder="Aralıq 1">
+        <input type="text" id="ar2" placeholder="Aralıq 2">
+        <button onclick="hesabla()">Ədədlər</button>
+        <p id="netice"></p>
+    </div>
+    <script>
+        function hesabla() {
+            // Dəyişənləri seçirik və parseInt vasitəsilə nömrə tipinə çeviririk. Trim vasitəsilə də boşluqları silirik.
+            let ededSay = parseInt(document.querySelector("#number").value.trim());
+            let araliq1 = parseInt(document.querySelector("#ar1").value.trim());
+            let araliq2 = parseInt(document.querySelector("#ar2").value.trim());
+    
+            // isNaN funksiyası ilə daxil edilən dəyərlərin rəqəm olub-olmadığını yoxlayırıq.
+            if (isNaN(ededSay) || isNaN(araliq1) || isNaN(araliq2)) {
+                alert("Bütün xanaları ədədlərdoldurun!");
+                return;
+            }
+    
+            // Əgər daxil edilən ədədlər müsbət deyilsə, istifadəçiyə xəbərdarlıq mesajı göstəririk.
+            if (ededSay <= 0 || araliq1 <= 0 || araliq2 <= 0) {
+                alert("Bütün xanalara  müsbət ədəd doldurun!");
+                return;
+            }
+    
+            // Əgər daxil edilən aralıq 1, aralıq 2-dən böyük vəya bərabərdirsə, istifadəçiyə xəbərdarlıq mesajı göstəririk.
+            if (araliq1 >= araliq2) {
+                alert("Aralıq 1, aralıq 2-dən kiçik olmalıdır.");
+                return;
+            }
+    
+            // Rəqəmləri saxlamaq üçün boş bir array yaradırıq.
+            let arr = [];
+    
+            // Daxil edilən ədəd qədər random ədədlər yaradır və array-ə əlavə edirik.
+            for (let i = 0; i < ededSay; i++) {
+                let randomnumber = Math.floor(Math.random() * (araliq2 - araliq1 + 1)) + araliq1;
+                arr.push(randomnumber);
+            }
+    
+            // Nəticəni göstərmək üçün p elementini seçirik və nəticənin array formasını stringə çevirərək göstəririk.
+            let p = document.querySelector("#netice");
+            p.innerText = "Nəticə: " + arr.join(", ");
+        }
+    </script>
+    
+</body>
+</html>

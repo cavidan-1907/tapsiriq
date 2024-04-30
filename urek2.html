@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ürək</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #121213; 
+    }
+ 
+</style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="800" height="700">A</canvas>
+
+<script>
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+    let t = 0;
+    let fillProgress = 0;
+    const heartX = canvas.width / 2;
+    const heartY = canvas.height / 2;
+
+    function drawHeart() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const x = heartX + 16 * Math.pow(Math.sin(t), 3) * 20;
+        const y = heartY - 13 * Math.cos(t) * 20 + 5 * Math.cos(2 * t) * 20 + 2 * Math.cos(3 * t) * 20 + Math.cos(4 * t) * 20;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        for (let i = 0; i <= 2 * Math.PI; i += 0.01) {
+            const x = heartX + 16 * Math.pow(Math.sin(i), 3) * 20;
+            const y = heartY - 13 * Math.cos(i) * 20 + 5 * Math.cos(2 * i) * 20 + 2 * Math.cos(3 * i) * 20 + Math.cos(4 * i) * 20;
+            ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop("0", "white");
+        gradient.addColorStop("1.0", "white");
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(heartX, heartY);
+        for (let i = 0; i <= fillProgress; i += 0.01) {
+            const x = heartX + 16 * Math.pow(Math.sin(i), 3) * 20;
+            const y = heartY - 13 * Math.cos(i) * 20 + 5 * Math.cos(2 * i) * 20 + 2 * Math.cos(3 * i) * 20 + Math.cos(4 * i) * 20;
+            ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fillStyle = gradient;
+        ctx.fill();
+    }
+
+    function animate() {
+    drawHeart();
+    fillProgress += 0.01;
+    if (fillProgress >= 2 * Math.PI) {
+        fillProgress = 0;
+    }
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
