@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cavidan km</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        body{
+            background-color: #f0f0f0;
+            padding: 30px;
+        }
+        
+        .container {
+            background-color: #f9f9f9;
+            border-radius: 20px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            width: 100%;
+        }
+        
+        .hesab {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 20px;
+            width: 100%;
+        }     
+        
+        button {
+            background-color: #4c95af;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+    
+        
+        input {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            outline: none;
+            width: 100%;
+        }
+        
+        .mm {
+            display: flex;
+            gap: 40px;
+            width: 100%;
+        }
+        
+        .m1 {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hesab"> 
+            <input type="number" id="num1" placeholder="Km"> 
+            <button onclick="hesapla()">Hesapla</button>
+        </div> 
+        <div class="mm"> 
+            <div class="m1">
+                <p>m: <span id="m"></span></p>
+                <p>sm: <span id="sm"></span></p>
+                <p>dm: <span id="dm"></span></p>
+            </div>   
+            <div class="m1">
+                <p>Mm: <span id="mm"></span></p>
+                <p>Duym: <span id="duym"></span></p>
+            </div>
+        </div>   
+    </div>
+    
+    <script>
+        function hesapla() {
+            let num1 = parseFloat(document.getElementById("num1").value);
+            let m = num1 * 1000;
+            let sm = num1 * 100000;
+            let dm = num1 * 10000;
+            let mm = num1 * 1000000;
+            let duym = num1 * 39370.1;
+
+            document.getElementById("m").textContent = m;
+            document.getElementById("sm").textContent = sm;
+            document.getElementById("dm").textContent = dm;
+            document.getElementById("mm").textContent = mm;
+            document.getElementById("duym").textContent = duym;
+        }
+    </script>
+</body>
+</html>
