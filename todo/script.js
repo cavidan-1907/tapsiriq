@@ -1,51 +1,68 @@
-let add = document.querySelector("#add");
-let addInput = document.querySelector("#text");
-let searchInput = document.querySelector("#search");
-let ul = document.querySelector("ul");
-let arr = [];
 
-add.addEventListener("click", () => {
-    let inputValue = addInput.value;
-    if (inputValue.trim() !== "") {
-        arr.push(inputValue);
-        updateList();
-        addInput.value = "";
+const addBtn=  document.querySelector('#addTodoButton');
+const searcInp=document.querySelector('#searchInput');
+const todoInput = document.querySelector('#todoInput');
+const todoList = document.querySelector('#todoList');
+const getTodos = () => {
+    let todos = [];
+    if(localStorage.getItem('todos')) {
+      todos = JSON.parse(localStorage.getItem('todos'));
     }
-});
-
-searchInput.addEventListener("input", () => {
-    updateList();
-});
-
-function updateList() {
-    ul.innerHTML = "";
-
-    let searchText = searchInput.value.toLowerCase();
-
-    arr.forEach((element, index) => {
-        if (element.toLowerCase().includes(searchText)) {
-            let li = document.createElement("li");
-            li.textContent = element;
-
-            let button = document.createElement("i");
-            button.classList.add("bi", "bi-trash");
-            button.addEventListener("click", () => removeItem(button));
-
-            li.appendChild(button);
-            ul.appendChild(li);
-        }
+    return todos;
+  }
+  
+  const addTodo = () => {;
+    const todoText = todoInput.value.trim();
+    if(todoText !== '') {
+      let todos = getTodos();
+      todos.push(todoText);
+      localStorage.setItem('todos', JSON.stringify(todos));
+      showTodos();
+      todoInput.value = '';
+    }
+  }
+  
+  const showTodos = () => {
+    let todos = getTodos();
+    todoList.innerHTML = '';
+    todos.forEach((todo, index) => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item';
+      li.innerHTML = `
+        ${todo}
+        <button class="btn btn-danger btn-sm float-right" onclick="deleteTodo(${index})"><i class="fas fa-trash"></i></button>
+      `;
+      todoList.appendChild(li);
     });
-}
-
-function removeItem(item) {
-    let index;
-    let children = ul.children;
-    for (let i = 0; i < children.length; i++) {
-        if (children[i] === item.parentNode) {
-            index = i;
-            break;
-        }
-    }
-    arr.splice(index, 1);
-    updateList();
-}
+  }
+  
+  const deleteTodo = (index) => {
+    let todos = getTodos();
+    todos.splice(index, 1);
+    alert("ugurla silindi")
+    localStorage.setItem('todos', JSON.stringify(todos));
+    showTodos();
+  }
+  
+addBtn.addEventListener('click', addTodo);
+searcInp.addEventListener('input', () => {
+    const searchTerm = searcInp.value.trim().toLowerCase();
+    const todos = getTodos();
+    const filteredTodos = todos.filter(todo => todo.toLowerCase().includes(searchTerm));
+    showFilteredTodos(filteredTodos);
+  });
+  
+  const showFilteredTodos = (filteredTodos) => {
+    todoList.innerHTML = '';
+    filteredTodos.forEach((todo, index) => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item';
+      li.innerHTML = `
+        ${todo}
+        <button class="btn btn-danger btn-sm float-right" onclick="deleteTodo(${index})"><i class="fas fa-trash"></i></button>
+      `;
+      todoList.appendChild(li);
+    });
+  }
+  
+  showTodos()
