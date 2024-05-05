@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <title>Toplama Hesablayıcı</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+     /* Şriftlər və gövdə */
+body {
+    font-family: Arial, sans-serif;     
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #ffffff; 
+    color: #000000; 
+}
+
+/* Kalkulyator divi */
+.calculator {
+    text-align: center;
+    border: 2px solid #ffda2a; 
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+}
+
+/* Düymələr */
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #ffffff;
+    background-color: #ffda2a; 
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+/* Sıfırlama düyməsi */
+button.reset-btn {
+    background-color: blue; 
+}
+
+/* Düymələrin üzərində mouse keçidində rəng dəyişimi */
+button:hover {
+    filter: brightness(0.8);
+}
+
+/* Inputlar */
+input[type="number"],
+input[type="text"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: calc(100% - 22px);
+}
+
+/* Inputlara fokuslananda effekt */
+input[type="number"]:focus,
+input[type="text"]:focus {
+    outline: none;
+    border-color: #ffda2a; 
+    box-shadow: 0px 0px 5px 0px rgba(0, 123, 255, 0.5); /* kölgə effekti yaradırıq */
+}
+
+/* Xəta mesajları */
+#error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <!-- Toplama Hesablayıcı Başlığı -->
+        <h2>Toplama Hesablayıcı</h2>
+        <!-- Cəmi hesablanacaq ədəd sayı üçün məlumat etiketi -->
+        <label for="numInputs">Cəmi hesablanacaq ədəd sayı :</label>
+        <!-- Ədəd sayısının daxil ediləcəyi input -->
+        <input type="text" id="numInputs">
+        <!-- Ədədləri yaratmaq üçün düymə -->
+        <button onclick="generateInputs()">Ədədləri yarat</button>
+        <!-- Ədədlərin daxil ediləcəyi div -->
+        <div id="inputs"></div>
+        <!-- Toplamı hesablayan düymə -->
+        <button class="calculate-btn" onclick="calculateTotal()">Toplamı Hesabla</button>
+        <!-- Hesablama sıfırlama düyməsi -->
+        <button class="reset-btn" onclick="resetCalculator()">Sıfırla</button>
+        <!-- Hesablama nəticələrinin göstərildiyi div -->
+        <div id="result"></div>
+        <!-- Xəta mesajlarının göstərildiyi div -->
+        <div id="error-message"></div>
+    </div>
+
+    <script>
+        // Ədəd inputlarını yaradan funksiya
+        function generateInputs() {
+            // Daxil edilən ədəd sayısı
+            const numInputs = document.getElementById('numInputs').value.trim() * 1;
+            // Əgər ədəd daxil edilməyibsə və ya düzgün ədəd olmadıbsa
+            if (numInputs === "" || isNaN(numInputs)) {
+                // Xəta mesajı
+                document.getElementById('result').innerHTML = '';
+                document.getElementById('error-message').innerHTML = "Zəhmət olmasa bir ədəd daxil edin.";
+                return;
+            }
+
+            // Əgər ədəd 0-dan kiçik və ya bərabərdirsə
+            if (numInputs <= 0) {
+                // Xəta mesajı
+                document.getElementById('result').innerHTML = '';
+                document.getElementById('error-message').innerHTML = "Zəhmət olmasa 0-dan böyük bir ədəd daxil edin.";
+                return;
+            }
+
+            // Ədəd sayısına uyğun inputları yaradırıq
+            const inputsDiv = document.getElementById('inputs');
+            inputsDiv.innerHTML = '';
+            for (let i = 1; i <= numInputs; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.placeholder = i +  " ədədi daxil edin:";
+                input.classList.add('number-input');
+                inputsDiv.appendChild(input);
+            }
+            // Xəta mesajını təmizləyirik
+            document.getElementById('error-message').innerHTML = '';
+        }
+
+        // Toplamı hesablayan funksiya
+        function calculateTotal() {
+            // Inputları seçirik
+            const inputs = document.getElementsByClassName('number-input');
+            // Əgər heç bir input yoxdursa
+            if (inputs.length === 0) {
+                // Xəta mesajı
+                document.getElementById('error-message').innerHTML = "Əvvəlcə ədədləri yaratmalısınız.";
+                return;
+            }
+
+            // Cəmi hesablayan hissə
+            let total = 0;
+            let allNumbersEntered = true;
+            for (let i = 0; i < inputs.length; i++) {
+                const inputValue = inputs[i].value.trim();
+                // Əgər input boş və ya ədəd deyilsə səhv mesaj göstəririk
+                if (inputValue === '' || isNaN(inputValue)) {
+                    allNumbersEntered = false;
+                    break;
+                }
+                total += inputValue * 1;
+            }
+
+            // Nəticələrin göstərilməsi
+            const resultDiv = document.getElementById('result');
+            const errorMessage = document.getElementById('error-message');
+            if (allNumbersEntered) {
+                resultDiv.innerHTML = "<p>Cəmi: " + total + "</p>";
+                errorMessage.innerHTML = "";
+            } else {
+                resultDiv.innerHTML = "";
+                errorMessage.innerHTML = "<p>Bütün boşluqları doldurun və yalnız ədədləri daxil edin.</p>";
+            }
+        }
+
+        // Hesablamanın sıfırlanması
+        function resetCalculator() {
+            document.getElementById('numInputs').value = '';
+            document.getElementById('inputs').innerHTML = '';
+            document.getElementById('result').innerHTML = '';
+            document.getElementById('error-message').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
