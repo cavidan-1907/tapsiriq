@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cavidan ortalama</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            margin: 30px auto;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid green;
+            gap: 30px;
+            background-color: rgb(155, 255, 155);
+            box-shadow: 0 0 10px 2px rgb(155, 255, 155);
+        }
+        select {
+            width: 32%;
+            cursor: pointer;
+        }
+        .group {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .inputDiv {
+            display: flex;
+        }
+        button {
+            width: 50%;
+            padding: 10px;
+            align-self: center;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkblue;
+        }
+        .result {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <select name="" id="select">
+            <option value="say">Fənn Sayı Seç</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+        </select>
+        <div class="group"></div>
+        <button onclick="calculateAverage()">Hesabla</button>
+        <p class="result">Nəticə: <span id="average">-</span></p>
+    </div>
+
+    <script>
+        let group = document.querySelector(".group");
+        let select = document.querySelector("#select");
+
+        function generateInputFields() {
+            let number = parseInt(select.value);
+            group.innerHTML = "";
+            for (let i = 1; i <= number; i++) {
+                group.innerHTML += `
+                    <div class="inputDiv">
+                        <div class="fennsayi">
+                            <label for="${i}cifenn">Fenn bali ${i}</label>
+                            <input type="number" id="${i}cifenn" />
+                        </div>
+                        <div class="kredit">
+                            <label for="${i}kredit">Fenn krediti ${i}</label>
+                            <input type="number" id="${i}kredit" />
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        select.addEventListener("change", generateInputFields);
+
+        function calculateAverage() {
+            let number = parseInt(select.value);
+            let totalCredits = 0;
+            let totalGradePoints = 0;
+            for (let i = 1; i <= number; i++) {
+                const grade = parseInt(document.getElementById(`${i}cifenn`).value);
+                const credits = parseInt(document.getElementById(`${i}kredit`).value);
+                if (isNaN(grade) || isNaN(credits)) {
+                    alert("Please enter valid grades and credits.");
+                    return;
+                }
+                totalCredits += credits;
+                totalGradePoints += grade * credits;
+            }
+            const average = totalGradePoints / totalCredits;
+            document.getElementById("average").innerText = average.toFixed(2);
+        }
+    </script>
+</body>
+</html>

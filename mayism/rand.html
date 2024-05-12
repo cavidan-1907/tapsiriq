@@ -4,50 +4,59 @@
     <meta charset="UTF-8">
     <title>Cavidan RandomArr</title>
     <style>
-     * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            background-color: #fff; 
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1); 
+            gap: 20px;
+        }
 
-.container {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff; 
-    box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.1); 
-}
+        .container input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px; 
+            font-size: 16px; 
+        }
 
-.container input {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px; 
-    font-size: 16px; 
-}
+        .container button {
+            padding: 10px 20px;
+            background-color: #4CAF50; 
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s; 
+        }
 
-.container button {
-    padding: 10px 20px;
-    background-color: #4CAF50; 
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s; 
-}
+        .container button:hover {
+            background-color: #45a049; 
+        }
 
-.container button:hover {
-    background-color: #45a049; 
-}
+   
+        .container button.reset {
+            background-color: #FF0000;
+        }
 
-.container p {
-    margin-top: 10px;
-    font-size: 18px;
-}
+        .container button.ededler {
+            background-color: #0000FF;
+        }
+
+        .container p {
+            font-size: 18px;
+        }
 
     </style>
 </head>
@@ -56,7 +65,8 @@
         <input type="text" id="number" placeholder="Ədəd sayı">
         <input type="text" id="ar1" placeholder="Aralıq 1">
         <input type="text" id="ar2" placeholder="Aralıq 2">
-        <button onclick="hesabla()">Ədədlər</button>
+        <button class="ededler" onclick="hesabla()">Ədədlər</button>
+        <button class="reset" onclick="resetForm()">Reset</button>
         <p id="netice"></p>
     </div>
     <script>
@@ -68,13 +78,13 @@
     
             // isNaN funksiyası ilə daxil edilən dəyərlərin rəqəm olub-olmadığını yoxlayırıq.
             if (isNaN(ededSay) || isNaN(araliq1) || isNaN(araliq2)) {
-                alert("Bütün xanaları ədədlərdoldurun!");
+                alert("Bütün xanalara ədədlər doldurun!");
                 return;
             }
     
             // Əgər daxil edilən ədədlər müsbət deyilsə, istifadəçiyə xəbərdarlıq mesajı göstəririk.
             if (ededSay <= 0 || araliq1 <= 0 || araliq2 <= 0) {
-                alert("Bütün xanalara  müsbət ədəd doldurun!");
+                alert("Bütün xanalara müsbət ədəd doldurun!");
                 return;
             }
     
@@ -96,6 +106,15 @@
             // Nəticəni göstərmək üçün p elementini seçirik və nəticənin array formasını stringə çevirərək göstəririk.
             let p = document.querySelector("#netice");
             p.innerText = "Nəticə: " + arr.join(", ");
+        }
+
+        function resetForm() {
+            // Formun içini təmizləyirik
+            document.querySelector("#number").value = "";
+            document.querySelector("#ar1").value = "";
+            document.querySelector("#ar2").value = "";
+            // Nəticə bölümünü təmizləyirik
+            document.querySelector("#netice").innerText = "";
         }
     </script>
     
